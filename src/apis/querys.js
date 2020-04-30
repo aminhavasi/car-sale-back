@@ -27,10 +27,15 @@ const RootQuery = new GraphQLObjectType({
     name: 'RootQuery',
     fields: {
         car: {
-            type: CarType,
+            type: new GraphQLList(CarType),
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
-                return { name: 'as', id: '45' };
+                return [
+                    { name: 'amin', id: 1 },
+                    { name: 'ali', id: 2 },
+                    { name: 'ahmad', id: 4 },
+                    { name: 'io', id: 3 },
+                ];
             },
         },
     },
