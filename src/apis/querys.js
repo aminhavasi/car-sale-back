@@ -8,38 +8,38 @@ const {
     GraphQLList,
 } = Graphql;
 
-const h = (a) => {
-    console.log(a);
-    return { name: a.id };
-};
-const CarType = new GraphQLObjectType({
-    name: 'car',
-    fields: () => ({
-        id: {
-            type: GraphQLID,
-        },
-        name: { type: GraphQLString },
-        group: { type: GraphQLString },
-    }),
-});
+// const h = (a) => {
+//     console.log(a);
+//     return { name: a.id };
+// };
+// const CarType = new GraphQLObjectType({
+//     name: 'car',
+//     fields: () => ({
+//         id: {
+//             type: GraphQLID,
+//         },
+//         name: { type: GraphQLString },
+//         group: { type: GraphQLString },
+//     }),
+// });
 
-const RootQuery = new GraphQLObjectType({
-    name: 'RootQuery',
-    fields: {
-        car: {
-            type: new GraphQLList(CarType),
-            args: { id: { type: GraphQLID } },
-            resolve(parent, args) {
-                return [
-                    { name: 'amin', id: 1 },
-                    { name: 'ali', id: 2 },
-                    { name: 'ahmad', id: 4 },
-                    { name: 'io', id: 3 },
-                ];
-            },
-        },
-    },
-});
+// const RootQuery = new GraphQLObjectType({
+//     name: 'RootQuery',
+//     fields: {
+//         car: {
+//             type: new GraphQLList(CarType),
+//             args: { id: { type: GraphQLID } },
+//             resolve(parent, args) {
+//                 return [
+//                     { name: 'amin', id: 1 },
+//                     { name: 'ali', id: 2 },
+//                     { name: 'ahmad', id: 4 },
+//                     { name: 'io', id: 3 },
+//                 ];
+//             },
+//         },
+//     },
+// });
 const MutationQuery = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
@@ -53,8 +53,7 @@ const MutationQuery = new GraphQLObjectType({
     },
 });
 
-//
 module.exports = new GraphQLSchema({
-    query: RootQuery,
-    mutation: MutationQuery,
+    query: null,
+    mutation: null,
 });
