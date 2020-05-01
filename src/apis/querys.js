@@ -15,6 +15,7 @@ const userType = new GraphQLObjectType({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         email: { type: GraphQLString },
+        token: { type: GraphQLString },
     }),
 });
 const RootQuery = new GraphQLObjectType({
@@ -40,6 +41,27 @@ const MutationQuery = new GraphQLObjectType({
                     const newUser = await new User(args);
                     let user = await newUser.save();
                     return user;
+                } catch (err) {
+                    return err;
+                }
+            },
+        },
+        loginUser: {
+            type: userType,
+            args: {
+                email: { type: new GraphQLNonNull(GraphQLString) },
+                password: { type: new GraphQLNonNull(GraphQLString) },
+            },
+            async resolve(parent, args) {
+                try {
+                    let user = await User.findByCredentials(
+                        args.email,
+                        args.password
+                    );
+                    let token = await user.genAutn();
+                    console.log(user);
+
+                    return { token };
                 } catch (err) {
                     return err;
                 }
