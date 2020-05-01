@@ -6,48 +6,33 @@ const {
     GraphQLString,
     GraphQLInt,
     GraphQLList,
+    GraphQLNonNull,
 } = Graphql;
 
-// const h = (a) => {
-//     console.log(a);
-//     return { name: a.id };
-// };
-// const CarType = new GraphQLObjectType({
-//     name: 'car',
-//     fields: () => ({
-//         id: {
-//             type: GraphQLID,
-//         },
-//         name: { type: GraphQLString },
-//         group: { type: GraphQLString },
-//     }),
-// });
-
-// const RootQuery = new GraphQLObjectType({
-//     name: 'RootQuery',
-//     fields: {
-//         car: {
-//             type: new GraphQLList(CarType),
-//             args: { id: { type: GraphQLID } },
-//             resolve(parent, args) {
-//                 return [
-//                     { name: 'amin', id: 1 },
-//                     { name: 'ali', id: 2 },
-//                     { name: 'ahmad', id: 4 },
-//                     { name: 'io', id: 3 },
-//                 ];
-//             },
-//         },
-//     },
-// });
+const userType = new GraphQLObjectType({
+    name: 'user',
+    fields: () => ({
+        id: { type: GraphQLID },
+        name: { type: GraphQLString },
+        email: { type: GraphQLString },
+    }),
+});
+const RootQuery = new GraphQLObjectType({
+    name: 'RootQuery',
+    fields: {},
+});
 const MutationQuery = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-        car: {
-            type: CarType,
-            args: { id: { type: GraphQLID } },
-            resolve(parent, args, context) {
-                return { name: 'as' };
+        addUser: {
+            type: userType,
+            args: {
+                name: { type: new GraphQLNonNull(GraphQLString) },
+                email: { type: new GraphQLNonNull(GraphQLString) },
+                password: { type: new GraphQLNonNull(GraphQLString) },
+            },
+            async resolve(parent, args) {
+                console.log(args);
             },
         },
     },
