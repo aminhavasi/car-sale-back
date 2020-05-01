@@ -8,7 +8,7 @@ const {
     GraphQLList,
     GraphQLNonNull,
 } = Graphql;
-
+const User = require('./../models/user');
 const userType = new GraphQLObjectType({
     name: 'user',
     fields: () => ({
@@ -19,7 +19,11 @@ const userType = new GraphQLObjectType({
 });
 const RootQuery = new GraphQLObjectType({
     name: 'RootQuery',
-    fields: {},
+    fields: {
+        car: {
+            type: userType,
+        },
+    },
 });
 const MutationQuery = new GraphQLObjectType({
     name: 'Mutation',
@@ -32,13 +36,19 @@ const MutationQuery = new GraphQLObjectType({
                 password: { type: new GraphQLNonNull(GraphQLString) },
             },
             async resolve(parent, args) {
-                console.log(args);
+                try {
+                    const newUser = await new User(args);
+                    let user = await newUser.save();
+                    return user;
+                } catch (err) {
+                    return err;
+                }
             },
         },
     },
 });
 
 module.exports = new GraphQLSchema({
-    query: null,
-    mutation: null,
+    query: RootQuery,
+    mutation: MutationQuery,
 });
