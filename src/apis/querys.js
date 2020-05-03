@@ -23,6 +23,10 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         car: {
             type: userType,
+            args: null,
+            resolve(parent, args) {
+                return { id: 88888 };
+            },
         },
     },
 });
@@ -37,6 +41,7 @@ const MutationQuery = new GraphQLObjectType({
                 password: { type: new GraphQLNonNull(GraphQLString) },
             },
             async resolve(parent, args) {
+                console.log('*');
                 try {
                     const newUser = await new User(args);
                     let user = await newUser.save();
